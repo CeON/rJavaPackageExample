@@ -1,0 +1,8 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.markdown$
+^usage_example_of_installed_package\.R$
+^Makefile$
+# Ignore "target" directory in Java Maven subprojects
+^java/[^/]*/target$
+^LICENSE$

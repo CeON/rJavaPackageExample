@@ -1,0 +1,14 @@
+*~
+*.swp
+/.Rproj.user
+/.Rhistory
+/R/.*
+/tests/testthat/.*
+/tests/.*
+# The content of this dir is generated automatically
+/man
+# The content of this dir is generated automatically
+/NAMESPACE
+# The Jar files in this dir are generated while building the project
+/inst/java/*
+.Rproj.user

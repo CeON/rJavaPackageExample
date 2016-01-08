@@ -1,0 +1,46 @@
+#: Note that in this file below we use "#:"" to mark a comment. This is
+#: treated by R as an unrecognized field and ignored.
+#: (cf. https://stat.ethz.ch/pipermail/r-devel/2012-November/065187.html)
+#:
+#: Name of the package
+Package: rJavaPackageExample
+#: Title should not be longer than 65 characters,
+#: i.e. this line should end no further than in 73 column.
+Title: Example of a package using rJava
+Version: 0.8
+#: A list of authors and their role in the package. See "R packages" 2015 book
+#: by Hadley Wickham, section "Package metadata",
+#: subsection "Author: who are you?" for a short
+#: description of the format of this field. Note that the field is an executable
+#: R code and you can see what string it translates to by pasting it in R
+#: shell.
+Authors@R: person("Mateusz", "Kobos", email = "mkobos@icm.edu.pl",
+  role = c("aut", "cre"))
+#: The description should be a single paragraph. Each line must be no longer
+#: than 80 characters. Subsequent lines should be indented with 4 spaces.
+Description: An example package that uses Java Jar library.
+    It contains Java Maven project, buildsystem based on Makefiles and Maven,
+    tests using "testthat", documentation using "Roxygen2". It follows
+    conventions from "R packages" 2015 book by Hadley Wickham.
+#: Usually you only give R version supported by the package in the Depends
+#: field.
+Depends: R (>= 2.7.0)
+#: List of packages (and optionally their versions) that the package requires.
+#: It's best to put one package per line and keep them in alphabetical order.
+#: This makes them easy to skim.
+Imports:
+    rJava (>= 0.5-0)
+#: List of packages and (and optionally their versions) that the package can
+#: make use of but they're not required to make it work.
+Suggests:
+    testthat
+#: SystemRequirements is just a plain text field and it is not automatically
+#: processed. Think of it like of a quick reminder and place a more comprehensive
+#: description of these requirements in the README.
+SystemRequirements: Java (>= 1.5)
+#: The CC0 license used below releases software into the public domain,
+#: or otherwise grants permission to use it for any purpose.
+#: It disclaims patent licenses.
+License: CC0
+#: LazyData makes it easier to access data in the package.
+LazyData: true
