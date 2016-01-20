@@ -30,5 +30,7 @@ The goal of this project is to show the following things.
         - `usage_example_of_installed_package.R` file: `library` statement
         - `tests/testthat.R` file: `library` statement and as an argument to `test_check` call
     - This is against the DRY principle; however, trying to deal with it would be probably too complex. 
-- When running `devtools::check()`, the application complains that the **paths in the Java project are too long** (messages like "storing paths of more than 100 bytes is not portable"). This is unfortunate, because Java projects tend to contain files with long paths. I haven't found a good way of solving this problem.
+- When running `devtools::check()`, the application complains about two things.
+    - The first one is that the **paths in the Java project are too long** (messages like "storing paths of more than 100 bytes is not portable"). This is unfortunate, because Java projects tend to contain files with long paths. I haven't found a good way of solving this problem.
+    - The second one is that the `java/number-adder/Makefile` file uses `ifndef` construction which is GNU makefile extension and thus makes the Makefile not portable.
 - Note that the philosophy of this code is that the **derived files are not included in the version control system**. As such, automatically generated file `NAMESPACE` and directory `man` are entered in `.gitignore` file. Hadley Wickham disapproves of this in his book (see chapter "Git and GitHub", paragraph starting from "Some developers never commit derived files").
