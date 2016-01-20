@@ -11,7 +11,7 @@
   #'
   #' The source and bundle package directory structure is used when two useful
   #' functions: `devtools::load_all()` and `devtools::test()` are executed.
-  #' This workaround' is not needed however when you run `devtools::check()` or
+  #' This workaround is not needed however when you run `devtools::check()` or
   #' `R CMD check` from command line or when you use this package from a
   #' third-party code when it is already installed in the system.
   #' It is not needed in these cases because the binary package directory

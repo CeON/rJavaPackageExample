@@ -2,22 +2,22 @@ PACKAGE_NAME=rJavaPackageExample
 SUBPROJECT_PATH_NUMBER_ADDER=java/number-adder
 # Place where the produced Jar files should go.
 JAVA_BUILD_TARGET=./inst/java
+$(shell mkdir -p $(JAVA_BUILD_TARGET))
 
-# Get the absolute path to the directory. This is needed by subproject 
-# Makefiles.
+# Absolute path to the directory. This is needed by subproject Makefiles.
 JAVA_BUILD_TARGET_ABSOLUTE=$(shell readlink -f $(JAVA_BUILD_TARGET))
-export JAVA_BUILD_TARGET_ABSOLUTE
 
 all: build
 
-# Create protable bundle package ready to be installed.
+# Create portable bundle package ready to be installed.
 build: build-subprojects docs
 	Rscript -e "devtools::test()"
 	Rscript -e "devtools::build()"
 
 # Build subprojects. We assume that testing is a part of their building process.
 build-subprojects:
-	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) build
+	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) build \
+		BUILD_TARGET=$(JAVA_BUILD_TARGET_ABSOLUTE)
 
 # Generate documentation.
 docs:
@@ -48,7 +48,7 @@ uninstall:
 
 clean: clean-subprojects
 	rm -rf man NAMESPACE *.tar.gz
-	rm -rf $(JAVA_BUILD_TARGET)/*
+	rm -rf $(JAVA_BUILD_TARGET)
 
 clean-subprojects:
 	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) clean
