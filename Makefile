@@ -11,7 +11,7 @@ all: build
 
 # Create portable bundle package ready to be installed.
 build: build-subprojects docs
-	Rscript -e "devtools::test()"
+	./run_all_tests.R
 	Rscript -e "devtools::build()"
 
 # Build subprojects. We assume that testing is a part of their building process.
@@ -26,7 +26,7 @@ docs:
 # Run all tests. Tests in subprojects are not run explicitly because we assume
 # that building them requires them to pass tests anyway.
 test: build-subprojects
-	Rscript -e "devtools::test()"
+	./run_all_tests.R
 
 test-subprojects:
 	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) test
