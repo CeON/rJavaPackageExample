@@ -34,7 +34,9 @@ Note that in order to be able to build the project, you need to have all R packa
         - `usage_example_of_installed_package.R` file: `library` statement
         - `tests/testthat.R` file: `library` statement and as an argument to `test_check` call
     - This is against the DRY principle; however, trying to deal with it would be probably too complex. 
-- When running `devtools::check()`, the application complains about two things.
+- When running `devtools::check()` two NOTEs are printed related to the following things.
     - The first one is that the **paths in the Java project are too long** (messages like "storing paths of more than 100 bytes is not portable"). This is unfortunate, because Java projects tend to contain files with long paths. I haven't found a good way of solving this problem.
-    - The second one is that the `java/number-adder/Makefile` file uses `ifndef` construction which is GNU makefile extension and thus makes the Makefile not portable.
+    - The second one is that `GNU make` is a system requirement of the package (as defined in the `DESCRIPTION` file). This is required, because in the `java/number-adder/Makefile` file we use `ifndef` construction which is GNU make extension with regards to POSIX make. Using GNU Make is discouraged because it is not completely portable as noted in ["Writing R Extensions" document, section "Writing-portable-packages"][1].
 - Note that the philosophy of this code is that the **derived files are not included in the version control system**. As such, automatically generated file `NAMESPACE` and directory `man` are entered in `.gitignore` file. Hadley Wickham disapproves of this in his book (see chapter "Git and GitHub", paragraph starting from "Some developers never commit derived files").
+
+[1]: https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Writing-portable-packages

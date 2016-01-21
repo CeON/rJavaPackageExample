@@ -37,7 +37,9 @@ Suggests:
 #: SystemRequirements is just a plain text field and it is not automatically
 #: processed. Think of it like of a quick reminder and place a more comprehensive
 #: description of these requirements in the README.
-SystemRequirements: Java (>= 1.5)
+SystemRequirements: 
+    Java (>= 1.5)
+    GNU make
 #: The CC0 license used below releases software into the public domain,
 #: or otherwise grants permission to use it for any purpose.
 #: It disclaims patent licenses.

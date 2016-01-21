@@ -10,7 +10,7 @@ build: build-assert-env-variables-are-set
 build-assert-env-variables-are-set:
 ifndef BUILD_TARGET
 	$(error Variable BUILD_TARGET is undefined. It should be set as a parameter\
-		of when calling make)
+		when calling make)
 endif
 
 test:
