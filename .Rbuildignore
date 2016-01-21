@@ -1,5 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^target$
 ^README\.markdown$
 ^usage_example_of_installed_package\.R$
 ^run_all_tests\.R$

@@ -5,6 +5,7 @@
 /R/.*
 /tests/testthat/.*
 /tests/.*
+/target
 # The content of this dir is generated automatically
 /man
 # The content of this dir is generated automatically

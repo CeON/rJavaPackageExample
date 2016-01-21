@@ -21,6 +21,10 @@ The goal of this project is to show the following things.
 
 [Rp]: (http://r-pkgs.had.co.nz/)
 
+# Installation
+
+Note that in order to be able to build the project, you need to have all R packages listed in the Imports section of the `DESCRIPTION` file installed in the system.
+
 # Some issues
 
 - Note that the **name of the project is repeated many times**.
