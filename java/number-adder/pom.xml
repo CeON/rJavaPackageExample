@@ -42,6 +42,7 @@
 						<configuration>
 							<outputDirectory>${project.build.directory}
 							</outputDirectory>
+							<includeScope>runtime</includeScope>
 						</configuration>
 					</execution>
 				</executions>
