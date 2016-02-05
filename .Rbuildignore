@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^target$
+^scripts$
 ^README\.markdown$
 ^usage_example_of_installed_package\.R$
 ^run_all_tests\.R$
@@ -8,3 +9,4 @@
 # Ignore "target" directory in Java Maven subprojects
 ^java/[^/]*/target$
 ^LICENSE$
+^latest.txt$
