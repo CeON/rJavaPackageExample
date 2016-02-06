@@ -7,7 +7,7 @@ Package: rJavaPackageExample
 #: Title should not be longer than 65 characters,
 #: i.e. this line should end no further than in 73 column.
 Title: Example of a package using rJava
-Version: 0.8.1
+Version: 0.8.2
 #: A list of authors and their role in the package. See "R packages" 2015 book
 #: by Hadley Wickham, section "Package metadata",
 #: subsection "Author: who are you?" for a short
