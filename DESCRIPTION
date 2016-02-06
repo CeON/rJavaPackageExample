@@ -46,3 +46,5 @@ SystemRequirements:
 License: CC0
 #: LazyData makes it easier to access data in the package.
 LazyData: true
+#: Version of the Roxygen documentation system
+RoxygenNote: 5.0.1
