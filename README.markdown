@@ -40,3 +40,13 @@ Note that in order to be able to build the project, you need to have all R packa
 - Note that the philosophy of this code is that the **derived files are not included in the version control system**. As such, automatically generated file `NAMESPACE` and directory `man` are entered in `.gitignore` file. Hadley Wickham disapproves of this in his book (see chapter "Git and GitHub", paragraph starting from "Some developers never commit derived files").
 
 [1]: https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Writing-portable-packages
+
+# Troubleshooting
+
+If you get a cryptic error message while running the tests similar to the one below:
+
+    Error in ._jobjRef_dollar(x[["jobj"]], name) :
+      no field, method or inner class called 'calls'
+    Calls: <Anonymous> ... expectation_error -> $ -> $.Throwable -> ._jobjRef_dollar
+
+this might mean that the version of Java that the source files were compiled for is incompatible with the Java version configured in R environment. The version of Java for the source files is set in `java/number-adder/pom.xml` while version of Java used in R environment is set using `R CMD javareconf` command.
