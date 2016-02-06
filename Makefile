@@ -9,11 +9,6 @@ BUILD_TARGET=./target
 # Place where the produced Jar files should go.
 JAVA_BUILD_TARGET=./inst/java
 
-$(shell mkdir -p $(JAVA_BUILD_TARGET))
-
-# Absolute path to the directory. This is needed by subproject Makefiles.
-JAVA_BUILD_TARGET_ABSOLUTE=$(shell readlink -f $(JAVA_BUILD_TARGET))
-
 all: build
 
 # Create portable bundle package ready to be installed.
@@ -24,8 +19,10 @@ build: build-subprojects docs
 
 # Build subprojects. We assume that testing is a part of their building process.
 build-subprojects:
+	mkdir -p $(JAVA_BUILD_TARGET)
+	# The "readlink" command below returns absolute path to the directory.
 	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) build \
-		BUILD_TARGET=$(JAVA_BUILD_TARGET_ABSOLUTE)
+		BUILD_TARGET=$(shell readlink -f $(JAVA_BUILD_TARGET))
 
 # Generate documentation.
 docs:
