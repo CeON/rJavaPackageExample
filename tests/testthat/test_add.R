@@ -12,8 +12,8 @@ test_that("adding vectors works", {
 })
 
 test_that("there is an error when vectors differ in length", {
-  #' Exception thrown in Java when vectors have different length should be
-  #' propagated to R as an error.
+  ## Exception thrown in Java when vectors have different length should be
+  ## propagated to R as an error.
   expect_error(add_vectors(c(1, 0), c(2, 0, 1)))
 })
 
