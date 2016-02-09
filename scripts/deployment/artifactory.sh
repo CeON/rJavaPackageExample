@@ -8,6 +8,9 @@ artifactory_root=$3		#[required] artifactory root location
 user_name=$4			#[optional] user name to be authenticated against artifactory, set to current user if not provided
 package_name=$5			#[optional] artifact package name
 
+#quitting on error
+set -e
+
 if [ -z "${user_name}" ]; then
     user_name=`whoami`
     echo setting artifactory user to current user: ${user_name}
@@ -22,9 +25,9 @@ if [ ! -d "${working_dir}" ]; then
     mkdir -p ${working_dir}
 fi
 
-echo downloading package: ${package_name}
+echo downloading package: ${package_name} into tmp directory ${working_dir}
 echo enter artifactory password:
-wget --user=${user_name} --ask-password ${artifactory_root}/${package_name} -O ${working_dir}
+wget --user=${user_name} --ask-password ${artifactory_root}/${package_name} -O ${working_dir}/${package_name}
 
 #performing common local activities
 #test this piece of code:
