@@ -37,7 +37,7 @@ package_name=`tar -ztf ${package_location} | grep -o '^[^/]\+' | sort -u`
 tmp_for_shiny=/tmp/${package_name}_shiny_extr
 
 #installing module in local system
-sudo su - -c "R -e \"install.packages('${package_location}', repos=NULL, type = 'source')\""
+R CMD INSTALL ${package_location}
 
 #extracting version.txt and shiny files to be copied to  webapp
 #first we should exract it to tmp dir, then remove current contents of webapp dir and copy new version

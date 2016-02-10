@@ -72,7 +72,8 @@ wget --user=${user_name} ${password_chunk} ${artifactory_root}/${package_name} -
 
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-. ${DIR}/local.sh -s ${shiny_webapp_location} -p ${working_dir}/${package_name}
+#removed leading '.' which causes troubles when running on remote machine
+${DIR}/local.sh -s ${shiny_webapp_location} -p ${working_dir}/${package_name}
 
 #cleanup phase
 rm -r ${working_dir}
