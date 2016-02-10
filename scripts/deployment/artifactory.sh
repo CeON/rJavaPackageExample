@@ -10,7 +10,7 @@
 #default artifactory root location, to be picket when location was not provided as input parameter
 artifactory_root_default='http://maven.ceon.pl/artifactory/reachmeter-snapshots/pl/edu/icm/reachmeter/rJavaPackageExample/'
 
-while getopts ":s:a:u:p:" opt; do
+while getopts ":s:a:u:p:x:" opt; do
   case $opt in
     s) shiny_webapp_location="$OPTARG"
     ;;
@@ -18,7 +18,9 @@ while getopts ":s:a:u:p:" opt; do
     ;;
     u) user_name="$OPTARG"
     ;;
-    p) package_location=="$OPTARG"
+    p) package_location="$OPTARG"
+    ;;
+    x) password="$OPTARG"
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
@@ -38,9 +40,19 @@ if [ -z "${user_name}" ]; then
     echo setting artifactory user to current user: ${user_name}
 fi
 
+if [ -z "${password}" ]; then
+    password_chunk='--ask-password'
+else
+    password_chunk='--password '$password
+fi
+
+echo password chunk: ${password_chunk}
+
 if [ -z "${package_name}" ]; then
-    echo enter artifactory password:
-    package_name=`wget -O- --user=${user_name} --ask-password ${artifactory_root}/latest.txt`
+    if [ -z "${password}" ]; then
+        echo enter artifactory password:
+    fi
+    package_name=`wget -O- --user=${user_name} ${password_chunk} ${artifactory_root}/latest.txt`
 fi
 
 working_dir=/tmp/${package_name}/$(date +%s)
@@ -50,8 +62,11 @@ if [ ! -d "${working_dir}" ]; then
 fi
 
 echo downloading package: ${package_name} into tmp directory ${working_dir}
-echo enter artifactory password:
-wget --user=${user_name} --ask-password ${artifactory_root}/${package_name} -O ${working_dir}/${package_name}
+
+if [ -z "${password}" ]; then
+    echo enter artifactory password:
+fi
+wget --user=${user_name} ${password_chunk} ${artifactory_root}/${package_name} -O ${working_dir}/${package_name}
 
 #performing common local activities
 #test this piece of code:
