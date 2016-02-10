@@ -46,8 +46,6 @@ else
     password_chunk='--password '$password
 fi
 
-echo password chunk: ${password_chunk}
-
 if [ -z "${package_name}" ]; then
     if [ -z "${password}" ]; then
         echo enter artifactory password:

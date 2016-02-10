@@ -9,7 +9,7 @@ while getopts ":s:p:" opt; do
   case $opt in
     s) shiny_webapp_location="$OPTARG"
     ;;
-    p) package_location=="$OPTARG"
+    p) package_location="$OPTARG"
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
