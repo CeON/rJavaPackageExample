@@ -1,15 +1,37 @@
 #!/bin/bash
+# To be executed from the root project directory.
+# Obtains R package from artifactory and executes local.sh script with package downloaded to temporary directory.
+# Input arguments:
+# -s [required] shiny webapp location where all shiny resources will be deployed
+# -a [optional] artifactory root location where R packages are stored along with latest.txt file pointing to the most recent one
+# -u [optional] user name to be authenticated against artifactory, set to currently logged in user if not provided
+# -p [optional] R package bundle full name which should be retrieved from artifactory. To be provided when one don't want to deploy most recent package version.
 
-#obtaining package from artifactory and performing local.sh with obtained package
+#default artifactory root location, to be picket when location was not provided as input parameter
+artifactory_root_default='http://maven.ceon.pl/artifactory/reachmeter-snapshots/pl/edu/icm/reachmeter/rJavaPackageExample/'
 
-working_dir=$1			#[required] working directory location
-shiny_webapp_location=$2	#[required] shiny webapp location
-artifactory_root=$3		#[required] artifactory root location
-user_name=$4			#[optional] user name to be authenticated against artifactory, set to current user if not provided
-package_name=$5			#[optional] artifact package name
+while getopts ":s:a:u:p:" opt; do
+  case $opt in
+    s) shiny_webapp_location="$OPTARG"
+    ;;
+    a) artifactory_root="$OPTARG"
+    ;;
+    u) user_name="$OPTARG"
+    ;;
+    p) package_location=="$OPTARG"
+    ;;
+    \?) echo "Invalid option -$OPTARG" >&2
+    ;;
+  esac
+done
 
 #quitting on error
 set -e
+
+if [ -z "${artifactory_root}" ]; then
+    artifactory_root=${artifactory_root_default}
+    echo setting artifactory root to default value: ${artifactory_root}
+fi
 
 if [ -z "${user_name}" ]; then
     user_name=`whoami`
@@ -20,6 +42,8 @@ if [ -z "${package_name}" ]; then
     echo enter artifactory password:
     package_name=`wget -O- --user=${user_name} --ask-password ${artifactory_root}/latest.txt`
 fi
+
+working_dir=/tmp/${package_name}/$(date +%s)
 
 if [ ! -d "${working_dir}" ]; then
     mkdir -p ${working_dir}
@@ -35,4 +59,7 @@ wget --user=${user_name} --ask-password ${artifactory_root}/${package_name} -O $
 
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-. ${DIR}/local.sh ${working_dir}/${package_name} ${shiny_webapp_location}
+. ${DIR}/local.sh -s ${shiny_webapp_location} -p ${working_dir}/${package_name}
+
+#cleanup phase
+rm -r ${working_dir}
