@@ -19,6 +19,7 @@ build: build-subprojects docs
 
 # Build subprojects. We assume that testing is a part of their building process.
 build-subprojects:
+	rm -rf $(JAVA_BUILD_TARGET)
 	mkdir -p $(JAVA_BUILD_TARGET)
 	# The "readlink" command below returns absolute path to the directory.
 	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) build \
