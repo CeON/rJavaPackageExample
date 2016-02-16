@@ -1,9 +1,9 @@
 #!/bin/bash
 # To be executed from the root project directory.
-# Installs R package locally and copies shiny resources to web application.
+# Installs R package locally and copies shiny resources from package 'shiny' directory to web application.
 # Input parameters:
 # -s [required] shiny webapp location where all shiny resources will be deployed
-# -p [optional] app package location, not required when both target/latest.txt and package itself are available
+# -p [optional] app package location, not required when build script was executed and both 'latest.txt' and package itself are available in 'target' directory
 
 while getopts ":s:p:" opt; do
   case $opt in
@@ -15,6 +15,14 @@ while getopts ":s:p:" opt; do
     ;;
   esac
 done
+
+#quitting on error
+set -e
+
+if [ -z "${shiny_webapp_location}" ]; then
+    echo -s input parameter value with shiny webapp location was not provided!
+    exit 1
+fi
 
 if [ -z "${package_location}" ]; then
     latest_txt_file_location='target/latest.txt'
@@ -28,9 +36,6 @@ fi
 
 echo got package_location parameter: ${package_location}
 echo got shiny_webapp_location parameter: ${shiny_webapp_location}
-
-#quitting on error
-set -e
 
 package_name=`tar -ztf ${package_location} | grep -o '^[^/]\+' | sort -u`
 

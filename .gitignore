@@ -13,4 +13,5 @@
 # The Jar files in this dir are generated while building the project
 /inst/java/*
 .Rproj.user
+.project
 version.txt

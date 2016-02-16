@@ -25,6 +25,33 @@ The goal of this project is to show the following things.
 
 Note that in order to be able to build the project, you need to have all R packages listed in the Imports section of the `DESCRIPTION` file installed in the system.
 
+# Building shiny package
+
+Shiny package build is triggered by executing script:
+
+`./scripts/build/artifactory.sh`
+
+in root project directory. It creates both package and `latest.txt` files to be uploaded to artifactory.
+`latest.txt` file contains name of the current module and its main purpose is to serve as pointer to the latest module version in artifactory.
+
+Shiny package includes `version.txt` file with git commit id identifying build.
+
+Build script should become part of Jenkins job triggered after each git commit.
+
+# Deploying shiny package
+
+Shiny package can be deployed in two modes:
+- with shiny package stored in local filesystem (e.g. after triggering build script)
+- with shiny package obtained from remote artifactory
+
+Two scripts were prepared to handle both scenarios:
+
+`./scripts/deployment/local.sh`
+
+`./scripts/deployment/artifactory.sh`
+
+All required and optional input parameters are described in scripts headers.
+
 # Some issues
 
 - Note that the **name of the project is repeated many times**.
