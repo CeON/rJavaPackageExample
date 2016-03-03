@@ -5,6 +5,9 @@
 # -s [required] shiny webapp location where all shiny resources will be deployed
 # -p [optional] app package location, not required when build script was executed and both 'latest.txt' and package itself are available in 'target' directory
 
+#quitting on error
+set -e
+
 while getopts ":s:p:" opt; do
   case $opt in
     s) shiny_webapp_location="$OPTARG"
@@ -15,9 +18,6 @@ while getopts ":s:p:" opt; do
     ;;
   esac
 done
-
-#quitting on error
-set -e
 
 if [ -z "${shiny_webapp_location}" ]; then
     echo -s input parameter value with shiny webapp location was not provided!
@@ -37,28 +37,25 @@ fi
 echo got package_location parameter: ${package_location}
 echo got shiny_webapp_location parameter: ${shiny_webapp_location}
 
-package_name=`tar -ztf ${package_location} | grep -o '^[^/]\+' | sort -u`
-
-tmp_for_shiny=/tmp/${package_name}_shiny_extr
-
 #installing module in local system
 R CMD INSTALL ${package_location}
 
-#extracting version.txt and shiny files to be copied to  webapp
+#extracting shiny files to be copied to webapp
 #first we should exract it to tmp dir, then remove current contents of webapp dir and copy new version
-if [ -d "${tmp_for_shiny}" ]; then
-    rm -r ${tmp_for_shiny}
-fi
-mkdir -p ${tmp_for_shiny}
+package_name=`tar -ztf ${package_location} | grep -o '^[^/]\+' | sort -u`
+tmp_for_shiny=`mktemp -d /tmp/${package_name}.XXXXXX`
+current_dir=`pwd`
 cd ${tmp_for_shiny}
 
-tar -zxvf ${package_location} ${package_name}/version.txt ${package_name}/shiny
+tar -zxvf ${package_location} ${package_name}/shiny
 #removing previously deployed files
 if [ -d "${shiny_webapp_location}" ]; then
     rm -r ${shiny_webapp_location}
 fi
 mkdir ${shiny_webapp_location}
 
-#introducing new shiny files and version.txt
+#introducing new shiny files
 cp -r ${tmp_for_shiny}/${package_name}/shiny/* ${shiny_webapp_location}
-cp ${package_name}/version.txt ${shiny_webapp_location}
+#cleanup
+cd ${current_dir}
+rm -r ${tmp_for_shiny}

@@ -14,4 +14,4 @@
 /inst/java/*
 .Rproj.user
 .project
-version.txt
+/shiny/version.txt
