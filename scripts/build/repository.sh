@@ -16,4 +16,4 @@ fi
 rm -rf target/*
 make clean build
 echo `ls target` > target/latest.txt
-
+rm shiny/version.txt
