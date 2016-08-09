@@ -12,8 +12,7 @@ JAVA_BUILD_TARGET=./inst/java
 all: build
 
 # Create portable bundle package ready to be installed.
-build: build-subprojects docs
-	./run_all_tests.R
+build: build-subprojects test docs
 	mkdir -p $(BUILD_TARGET)
 	Rscript -e "devtools::build(path = \"$(BUILD_TARGET)\")"
 
