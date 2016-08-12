@@ -5,9 +5,9 @@ SUBPROJECT_PATH_NUMBER_ADDER=java/number-adder
 
 
 # Directory where build package should be placed.
-BUILD_TARGET=./target
+BUILD_TARGET=target
 # Place where the produced Jar files should go.
-JAVA_BUILD_TARGET=./inst/java
+JAVA_BUILD_TARGET=inst/java
 
 all: build
 
@@ -20,9 +20,8 @@ build: build-subprojects test docs
 build-subprojects:
 	rm -rf $(JAVA_BUILD_TARGET)
 	mkdir -p $(JAVA_BUILD_TARGET)
-	# The "readlink" command below returns absolute path to the directory.
 	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) build \
-		BUILD_TARGET=$(shell readlink -f $(JAVA_BUILD_TARGET))
+		BUILD_TARGET=$(shell pwd)/$(JAVA_BUILD_TARGET)
 
 # Generate documentation.
 docs:
