@@ -19,9 +19,9 @@ test_that("there is an error when vectors differ in length", {
 
 #'TODO: This test doesn't work when run from command line. However, it works
 #' when run from R console in `run_all_test.R` file.
-#test_that("adding matrices works",{
-#  x <- matrix(c(1, -1, 2, 0, 1, 3), ncol = 2)
-#  y <- matrix(c(2, 1, 3, 0, 3, 3), ncol = 2)
-#  expected <- matrix(c(3, 0, 5, 0, 4, 6), ncol = 2)
-#  expect_equal(add_matrices(x, y), expected)
-#})
+test_that("adding matrices works",{
+ x <- matrix(c(1, -1, 2, 0, 1, 3), ncol = 2)
+ y <- matrix(c(2, 1, 3, 0, 3, 3), ncol = 2)
+ expected <- matrix(c(3, 0, 5, 0, 4, 6), ncol = 2)
+ expect_equal(add_matrices(x, y), expected)
+})

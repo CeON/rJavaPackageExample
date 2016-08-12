@@ -3,7 +3,15 @@
 #' The script runs all tests in the project and returns status 1 if at least
 #' one of them failed,  0 otherwise.
 
-#' Code based on function `all_passed` from `reporter-list.R` file from 
+#' The package below is used here explicitly. This is because when you run this
+#' script from command-line, the package is not loaded (unlike when you run
+#' the script when you use R) and this prevents rJava from working correctly
+#' (I got an error saying "object is not a Java object reference (jobjRef/jarrayRef)")
+#' A discussion about this problem can be found at
+#' http://r.789695.n4.nabble.com/Why-would-something-work-in-R-but-not-Rscript-td4699820.html
+library('methods')
+
+#' Code based on function `all_passed` from `reporter-list.R` file from
 #' `testthat` package
 all_passed <- function(res) {
   if (length(res) == 0)
