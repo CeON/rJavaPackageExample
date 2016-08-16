@@ -1,5 +1,7 @@
 # About
 
+[![Build Status](https://travis-ci.org/CeON/rJavaPackageExample.png?branch=master)](https://travis-ci.org/CeON/rJavaPackageExample)
+
 This is an example R package project that uses code written in Java.
 
 For a concise introduction to rJava, read "Documentation" section on the [webpage of the rJava project](https://www.rforge.net/rJava/) .

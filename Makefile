@@ -31,7 +31,7 @@ build-subprojects:
 # Run all tests. Tests in subprojects are not run explicitly because we assume
 # that building them requires them to pass tests anyway.
 test: $(BUILD_TARGET)
-	./run_all_tests.R
+	Rscript run_all_tests.R
 
 # Generate documentation.
 docs:

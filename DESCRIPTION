@@ -7,7 +7,7 @@ Package: rJavaPackageExample
 #: Title should not be longer than 65 characters,
 #: i.e. this line should end no further than in 73 column.
 Title: Example of a package using rJava
-Version: 0.8.7
+Version: 0.8.8
 #: A list of authors and their role in the package. See "R packages" 2015 book
 #: by Hadley Wickham, section "Package metadata",
 #: subsection "Author: who are you?" for a short
@@ -33,7 +33,7 @@ Imports:
 #: List of packages and (and optionally their versions) that the package can
 #: make use of but they're not required to make it work.
 Suggests:
-    testthat
+	roxygen2 (>= 5.0.0), testthat
 #: SystemRequirements is just a plain text field and it is not automatically
 #: processed. Think of it like of a quick reminder and place a more comprehensive
 #: description of these requirements in the README.
