@@ -1,8 +1,11 @@
 PACKAGE_NAME=rJavaPackageExample
 # Path to subproject. If there are more subprojects, more variables like this
 # have to be added.
+# We require each subproject to contain a Makefile with `build` and `clean`
+# targets defined: `build` builds subprojects' artefacts, and `clean` removes
+# files derived from source code. We also require building to include running 
+# the tests.
 SUBPROJECT_PATH_NUMBER_ADDER=java/number-adder
-
 
 # Directory where build package should be placed.
 BUILD_TARGET=target
@@ -11,29 +14,28 @@ JAVA_BUILD_TARGET=inst/java
 
 all: build
 
+build: $(BUILD_TARGET) tests docs
+
 # Create portable bundle package ready to be installed.
-build: build-subprojects test docs
+$(BUILD_TARGET): build-subprojects
+	rm -rf $(JAVA_BUILD_TARGET)
+	mkdir -p $(JAVA_BUILD_TARGET)
+	cp $(SUBPROJECT_PATH_NUMBER_ADDER)/target/*.jar $(JAVA_BUILD_TARGET)
 	mkdir -p $(BUILD_TARGET)
 	Rscript -e "devtools::build(path = \"$(BUILD_TARGET)\")"
 
 # Build subprojects. We assume that testing is a part of their building process.
 build-subprojects:
-	rm -rf $(JAVA_BUILD_TARGET)
-	mkdir -p $(JAVA_BUILD_TARGET)
-	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) build \
-		BUILD_TARGET=$(shell pwd)/$(JAVA_BUILD_TARGET)
+	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) build
+
+# Run all tests. Tests in subprojects are not run explicitly because we assume
+# that building them requires them to pass tests anyway.
+test: $(BUILD_TARGET)
+	./run_all_tests.R
 
 # Generate documentation.
 docs:
 	Rscript -e "devtools::document()"
-
-# Run all tests. Tests in subprojects are not run explicitly because we assume
-# that building them requires them to pass tests anyway.
-test: build-subprojects
-	./run_all_tests.R
-
-test-subprojects:
-	$(MAKE) -C $(SUBPROJECT_PATH_NUMBER_ADDER) test
 
 # Check the code and package structure for common problems; run tests.
 # The number of ERRORs and WARNINGs should be zero. Ideally, the number of
